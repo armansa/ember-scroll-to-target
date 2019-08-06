@@ -1,5 +1,16 @@
 import Ember from "ember";
 
+var getElemDistance = function ( elem ) {
+    var location = 0;
+    if (elem.offsetParent) {
+        do {
+            location += elem.offsetTop;
+            elem = elem.offsetParent;
+        } while (elem);
+    }
+    return location >= 0 ? location : 0;
+};
+
 export default Ember.Component.extend({
   label: "",
   tagName: null,
@@ -22,7 +33,7 @@ export default Ember.Component.extend({
   },
 
   scrollToTarget(target, offset, duration) {
-    const targetPos = document.querySelector(target).offsetTop + offset;
+    const targetPos = getElemDistance(document.querySelector(target)) + offset;
     this.animateScroll(targetPos, duration)
   },
 
