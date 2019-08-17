@@ -1,16 +1,5 @@
 import Ember from "ember";
 
-var getElemDistance = function ( elem ) {
-    var location = 0;
-    if (elem.offsetParent) {
-        do {
-            location += elem.offsetTop;
-            elem = elem.offsetParent;
-        } while (elem);
-    }
-    return location >= 0 ? location : 0;
-};
-
 export default Ember.Component.extend({
   label: "",
   tagName: null,
@@ -33,7 +22,7 @@ export default Ember.Component.extend({
   },
 
   scrollToTarget(target, offset, duration) {
-    const targetPos = getElemDistance(document.querySelector(target)) + offset;
+    const targetPos = this.getElemDistance(document.querySelector(target)) + offset;
     this.animateScroll(targetPos, duration)
   },
 
@@ -50,6 +39,17 @@ export default Ember.Component.extend({
       }
     };
     animate();
+  },
+
+  getElemDistance( elem ) {
+    var location = 0;
+    if (elem.offsetParent) {
+        do {
+            location += elem.offsetTop;
+            elem = elem.offsetParent;
+        } while (elem);
+    }
+    return location >= 0 ? location : 0;
   },
 
   getAnimationPos(time, startPos, endPos, duration) {
