@@ -27,18 +27,22 @@ export default Ember.Component.extend({
   },
 
   animateScroll(targetPos, duration) {
-    const self = this;
-    const startPos = window.scrollY;
-    const speed = 20;
-    let time = 0;
-    const animate = function () {
-      time += speed;
-      window.scrollTo(0, self.getAnimationPos(time, startPos, targetPos - startPos, duration));
-      if (time < duration) {
-        setTimeout(animate, speed);
-      }
-    };
-    animate();
+    if (window.scrollY != undefined) {
+      const self = this;
+      const startPos = window.scrollY;
+      const speed = 20;
+      let time = 0;
+      const animate = function () {
+        time += speed;
+        window.scrollTo(0, self.getAnimationPos(time, startPos, targetPos - startPos, duration));
+        if (time < duration) {
+          setTimeout(animate, speed);
+        }
+      };
+      animate();
+    } else {
+      window.scrollTo(0, targetPos);
+    }
   },
 
   getElemDistance( elem ) {
