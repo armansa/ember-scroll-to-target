@@ -46,14 +46,12 @@ export default Ember.Component.extend({
   },
 
   getElemDistance( elem ) {
-    var location = 0;
-    if (elem.offsetParent) {
-        do {
-            location += elem.offsetTop;
-            elem = elem.offsetParent;
-        } while (elem);
+    var result = 0;
+    while (elem && elem.offsetParent) {
+      result += elem.offsetTop;
+      elem = elem.offsetParent;
     }
-    return location >= 0 ? location : 0;
+    return result >= 0 ? result : 0;
   },
 
   getAnimationPos(time, startPos, endPos, duration) {
