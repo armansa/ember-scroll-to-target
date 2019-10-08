@@ -22,6 +22,9 @@ export default Ember.Component.extend({
   },
 
   scrollToTarget(target, offset, duration) {
+    if(this.get("onScroll")) {
+      this.onScroll();
+    }
     const targetPos = this.getElemDistance(document.querySelector(target)) + offset;
     this.animateScroll(targetPos, duration)
   },
