@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   label: "",
   tagName: null,
   target: null,
+  autoScroll: false,
   offset: 0,
   duration: 500,
   didInsertElement() {
@@ -15,10 +16,14 @@ export default Ember.Component.extend({
       Ember.Logger.error("Target should be passed");
       return;
     }
-    document.querySelector(`#${this.get("elementId")}`)
-      .addEventListener("click", function () {
-        self.scrollToTarget(target, offset, duration);
-      });
+    if (this.get('autoScroll')) {
+      self.scrollToTarget(target, offset, duration);
+    } else {
+      document.querySelector(`#${this.get("elementId")}`)
+        .addEventListener("click", function () {
+          self.scrollToTarget(target, offset, duration);
+        });
+    }
   },
 
   scrollToTarget(target, offset, duration) {
